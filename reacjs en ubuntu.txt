@@ -1,0 +1,8 @@
+https://codeburst.io/installing-reactjs-and-creating-your-first-application-d437706498ed
+
+
+https://github.com/nodesource/distributions
+https://www.techiediaries.com/php-rest-api/
+https://www.codeofaninja.com/2017/02/create-simple-rest-api-in-php.html
+https://www.youtube.com/watch?v=DhF_MNMcPtg
+https://www.youtube.com/watch?v=eNikUI0Y8y8

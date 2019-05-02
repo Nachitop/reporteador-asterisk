@@ -1,0 +1,71 @@
+Replicación
+https://www.youtube.com/watch?v=Z4XEFMoXSSM
+installar cosas necesarias 
+
+sudo apt-get install apache2 -y
+sudo apt-get install mysql-server
+mysql install db
+sudo apt-get install php libapache2-mod-php php-mcrypt
+sudo apt-get install phpmyadmin -y
+
+abrir archivo
+sudo nano /etc/apache2/apache2.conf
+y pegar
+
+Include /etc/phpmyadmin/apache.conf
+
+volver
+sudo service apache2 restart
+sudo service apache2 status
+
+crear bd
+
+CREATE DATABASE asterisk;
+
+CREATE TABLE cdr ( 
+        calldate datetime NOT NULL default CURRENT_TIMESTAMP, 
+        clid varchar(80) NOT NULL default '', 
+        src varchar(80) NOT NULL default '', 
+        dst varchar(80) NOT NULL default '', 
+        dcontext varchar(80) NOT NULL default '', 
+        channel varchar(80) NOT NULL default '', 
+        dstchannel varchar(80) NOT NULL default '', 
+        lastapp varchar(80) NOT NULL default '', 
+        lastdata varchar(80) NOT NULL default '', 
+        duration int(11) NOT NULL default '0', 
+        billsec int(11) NOT NULL default '0', 
+        disposition varchar(45) NOT NULL default '', 
+        amaflags int(11) NOT NULL default '0', 
+        accountcode varchar(20) NOT NULL default '', 
+        uniqueid varchar(32) NOT NULL default '', 
+        userfield varchar(255) NOT NULL default '' 
+);
+
+ir a replication en phpmyadmin del servidor master (sucursal1), configurar y obtener los datos que aparecen ahí
+
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+
+pegar datos previamente copiados
+cambiar ip a 0.0.0.0 y agreagr nombre de bd a replicar
+
+show master status;
+obetenr datos
+crear usuario replicador y darle permisos de replicación, agregar contraseña y conectarse desde cualquier host
+GRANT REPLICATION SLAVE ON *.* to 'replicador'@'%' IDENTIFIED BY 'admin123'
+
+netstat -na | grep 3306
+
+
+en master phpmydmins poner:
+FLUSH TABLES WITH READ LOCK;
+UNLOCK TABLES;
+
+en esclavo modificamos el archivo en donde cambiamos la id del servidor y la ip a 0.0.0.0
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+
+en phpmyadmin esclavo poenr
+CHANGE MASTER to MASTER_HOST='ipservidormaster', MASTER_USER='usuarioreplicador',master_password='contraseñausuarioreplicador', master_port=3306, master_log_file='mysql-bin.00000x',
+master_log_pos=posiciondelbin(454), master_connect_retry=10;
+
+
+

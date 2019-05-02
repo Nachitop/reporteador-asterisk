@@ -1,0 +1,9 @@
+Desplegar servidor apache en linux
+
+copiar archivos php en la ruta:
+y borrar el archivo index.html
+/var/www/hmtl/
+otorgar permisos a los archivos
+sudo chmod 777 -R /var/www/html/
+
+sudo service apache2 restart
