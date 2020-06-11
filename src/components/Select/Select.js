@@ -11,7 +11,7 @@ class Select extends Component{
                <option value="">Select an option</option>
                <option value="matriz">Matriz</option>
                <option value="sucursal1">Sucursal1</option>
-               <option value="sucursal1">Sucursal1 Replicada</option>
+               <option value="sucursal2-r">Sucursal2 Replicada</option>
                <option value="sucursal2">Sucursal2</option>
                </select>
                </div>
